@@ -12,7 +12,7 @@ import { map } from 'rxjs';
   styleUrl: './available-places.component.css',
 })
 export class AvailablePlacesComponent implements OnInit {
-  place = signal<Place[] | undefined>(undefined);
+  places = signal<Place[] | undefined>(undefined);
   isFetching = signal(false);
   // place: Place[] = [];
   constructor(
@@ -21,29 +21,24 @@ export class AvailablePlacesComponent implements OnInit {
     private http: HttpClient
   ) {}
 
-  // ngOnInit() {
-  //   const subscription = this.ps.getPlaces().subscribe({
-  //     next: (data) => {
-  //       this.place = data;
-  //       console.log(data);
-  //     },
-  //   });
   ngOnInit() {
+    this.isFetching.set(true);
     const subscription = this.http
+
       .get<{ places: Place[] }>('http://localhost:3000/places')
       .pipe(map((response) => response.places))
       .subscribe({
         next: (data) => {
-          this.place.set(data);
+          this.places.set(data);
           console.log(data);
         },
+        complete: () => {
+          this.isFetching.set(false);
+        },
       });
+
     this.destroyRef.onDestroy(() => {
       subscription.unsubscribe();
     });
   }
-
-  // this.destroyRef.onDestroy(() => {
-  //   subscription.unsubscribe();
-  // });
 }

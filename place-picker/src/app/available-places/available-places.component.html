@@ -1,1 +1,22 @@
-<p>available-places works!</p>
+<div class="rounded-md flex items-center justify-center mt-2">
+  @if(isFetching()){
+  <p>Loading...</p>
+  } @if(places()){
+  <div
+    class="flex flex-row gap-[10px] flex-wrap p-2 w-[1000px] bg-red-400 h-[500px] rounded-md"
+  >
+    @for(items of places(); track items){
+    <div class="bg-white w-[320px] p-2 h-[200px] rounded-md">
+      <div class="h-full w-full relative">
+        <div
+          class="absolute bottom-0 p-2 flex items-center justify-center right-0 w-[50%] rounded-md h-[30px] bg-black opacity-50"
+        >
+          <p class="text-sm">{{ items.title }}</p>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+
+  }
+</div>
