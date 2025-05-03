@@ -41,10 +41,13 @@ export class AvailablePlacesComponent implements OnInit {
   }
 
   saveSelectedPlace(place: Place) {
-    this.ps.saveSelectedLocation(place.id).subscribe({
+    const subscription = this.ps.saveSelectedLocation(place.id).subscribe({
       next: (response) => {
         console.log(response);
       },
+    });
+    this.destroyRef.onDestroy(() => {
+      subscription.unsubscribe();
     });
   }
 }
