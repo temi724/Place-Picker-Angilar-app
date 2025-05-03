@@ -14,31 +14,37 @@ import { map } from 'rxjs';
 export class AvailablePlacesComponent implements OnInit {
   places = signal<Place[] | undefined>(undefined);
   isFetching = signal(false);
+  error = signal('');
   // place: Place[] = [];
   constructor(
     private ps: PlaceServiceService,
-    private destroyRef: DestroyRef,
-    private http: HttpClient
+    private destroyRef: DestroyRef
   ) {}
 
   ngOnInit() {
     this.isFetching.set(true);
-    const subscription = this.http
-
-      .get<{ places: Place[] }>('http://localhost:3000/places')
-      .pipe(map((response) => response.places))
-      .subscribe({
-        next: (data) => {
-          this.places.set(data);
-          console.log(data);
-        },
-        complete: () => {
-          this.isFetching.set(false);
-        },
-      });
+    const subscription = this.ps.getPlaces().subscribe({
+      next: (data) => {
+        this.places.set(data);
+      },
+      error: (error) => {
+        this.error.set(error);
+      },
+      complete: () => {
+        this.isFetching.set(false);
+      },
+    });
 
     this.destroyRef.onDestroy(() => {
       subscription.unsubscribe();
+    });
+  }
+
+  saveSelectedPlace(place: Place) {
+    this.ps.saveSelectedLocation(place.id).subscribe({
+      next: (response) => {
+        console.log(response);
+      },
     });
   }
 }
