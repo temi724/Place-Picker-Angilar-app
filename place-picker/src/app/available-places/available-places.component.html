@@ -4,9 +4,7 @@
   @if(error()){
   <p>Please retry after some time</p>
   } } @if(places()){
-  <div
-    class="flex flex-row gap-[9.33px] flex-wrap p-2 w-[1000px] h-[500px] rounded-md"
-  >
+  <div class="flex flex-row gap-[9.33px] flex-wrap p-2 w-[1000px] rounded-md">
     @for(items of places(); track items){
     <div
       (click)="saveSelectedPlace(items)"

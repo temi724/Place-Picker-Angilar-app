@@ -2,10 +2,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@10..48,400;10..48,700&family=Raleway:wght@400;700&display=swap");
 @import "tailwindcss";
 
-
+/* 
 * {
     box-sizing: border-box;
-}
+} */
 
 html {
     font-family: "Bricolage Grotesque", sans-serif;
@@ -18,20 +18,16 @@ html {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -webkit-text-size-adjust: 100%;
-    height: 100%;
+
 }
 
 body {
-    margin: 0;
     padding: 2rem;
     background: linear-gradient(180deg, #1f1c2c 0%, #1f1c2c 100%);
 }
 
-header {
-    text-align: center;
-}
 
-header img {
+/* header img {
     width: 5rem;
     height: 5rem;
     object-fit: contain;
@@ -50,4 +46,4 @@ header p {
     font-size: 1.15rem;
     max-width: 38ch;
     color: #9eb5b4;
-}
+} */
