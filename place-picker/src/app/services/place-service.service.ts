@@ -26,8 +26,19 @@ export class PlaceServiceService {
   }
 
   saveSelectedLocation(place: Place) {
-    this.places.update((prev) => [...prev, place]);
-    return this.http.put(`${this.apiUrl}/user-places`, { placeId: place.id });
+    const prevPlaces = this.places();
+    if (!prevPlaces.some((p) => p.id === place.id)) {
+      this.places.set([...prevPlaces, place]);
+    }
+
+    return this.http
+      .put(`${this.apiUrl}/user-places`, { placeId: place.id })
+      .pipe(
+        catchError((error) => {
+          this.places.set(prevPlaces);
+          return throwError(() => new Error('please retry'));
+        })
+      );
   }
 
   private fetchPlaces(url: string, erroMessage: string) {
