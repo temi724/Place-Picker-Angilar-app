@@ -28,6 +28,7 @@ export class AvailablePlacesComponent implements OnInit {
         this.places.set(data);
       },
       error: (error) => {
+        this.isFetching.set(false);
         this.error.set(error);
       },
       complete: () => {

@@ -32,4 +32,15 @@ export class FavPlacesComponent implements OnInit {
       subscription.unsubscribe();
     });
   }
+
+  removePlace(place: Place) {
+    const subscription = this.ps.removePlaces(place).subscribe({
+      next: (response) => {
+        console.log(response);
+      },
+    });
+    this.destroyRef.onDestroy(() => {
+      subscription.unsubscribe();
+    });
+  }
 }

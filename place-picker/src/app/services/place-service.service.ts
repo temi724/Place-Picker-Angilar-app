@@ -25,6 +25,18 @@ export class PlaceServiceService {
     );
   }
 
+  removePlaces(place: Place) {
+    const prevPlaces = this.places();
+    this.places.set(prevPlaces.filter((p) => p.id !== place.id));
+
+    return this.http.delete(`${this.apiUrl}/user-places/${place.id}`).pipe(
+      catchError((error) => {
+        this.places.set(prevPlaces);
+        return throwError(() => new Error('please retry'));
+      })
+    );
+  }
+
   saveSelectedLocation(place: Place) {
     const prevPlaces = this.places();
     if (!prevPlaces.some((p) => p.id === place.id)) {
